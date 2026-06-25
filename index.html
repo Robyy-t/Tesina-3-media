@@ -302,35 +302,38 @@ body { font-family: 'Montserrat', sans-serif; background: var(--bg); color: var(
     <h2>Materie d'Esame</h2>
   </div>
   <div class="mat-list">
+    <div class="mat-item" onclick="showMateria('musica')">
+      <span class="mat-num">01</span><span class="mat-name"><span class="mat-ico">🎵</span> Musica</span><span class="mat-arr">→</span>
+    </div>
     <div class="mat-item" onclick="showMateria('geografia')">
-      <span class="mat-num">01</span><span class="mat-name"><span class="mat-ico">🗺️</span> Geografia</span><span class="mat-arr">→</span>
+      <span class="mat-num">02</span><span class="mat-name"><span class="mat-ico">🗺️</span> Geografia</span><span class="mat-arr">→</span>
     </div>
     <div class="mat-item" onclick="showMateria('inglese')">
-      <span class="mat-num">02</span><span class="mat-name"><span class="mat-ico">🇬🇧</span> Inglese</span><span class="mat-arr">→</span>
+      <span class="mat-num">03</span><span class="mat-name"><span class="mat-ico">🇬🇧</span> Inglese</span><span class="mat-arr">→</span>
     </div>
     <div class="mat-item" onclick="showMateria('francese')">
-      <span class="mat-num">03</span><span class="mat-name"><span class="mat-ico">🇫🇷</span> Francese</span><span class="mat-arr">→</span>
+      <span class="mat-num">04</span><span class="mat-name"><span class="mat-ico">🇫🇷</span> Francese</span><span class="mat-arr">→</span>
     </div>
     <div class="mat-item" onclick="showMateria('arte')">
-      <span class="mat-num">04</span><span class="mat-name"><span class="mat-ico">🎨</span> Arte</span><span class="mat-arr">→</span>
+      <span class="mat-num">05</span><span class="mat-name"><span class="mat-ico">🎨</span> Arte</span><span class="mat-arr">→</span>
     </div>
     <div class="mat-item" onclick="showMateria('italiano')">
-      <span class="mat-num">05</span><span class="mat-name"><span class="mat-ico">📖</span> Italiano</span><span class="mat-arr">→</span>
+      <span class="mat-num">06</span><span class="mat-name"><span class="mat-ico">📖</span> Italiano</span><span class="mat-arr">→</span>
     </div>
     <div class="mat-item" onclick="showMateria('storia')">
-      <span class="mat-num">06</span><span class="mat-name"><span class="mat-ico">🌍</span> Storia</span><span class="mat-arr">→</span>
+      <span class="mat-num">07</span><span class="mat-name"><span class="mat-ico">🌍</span> Storia</span><span class="mat-arr">→</span>
     </div>
     <div class="mat-item" onclick="showMateria('religione')">
-      <span class="mat-num">07</span><span class="mat-name"><span class="mat-ico">✝️</span> Religione</span><span class="mat-arr">→</span>
+      <span class="mat-num">08</span><span class="mat-name"><span class="mat-ico">✝️</span> Religione</span><span class="mat-arr">→</span>
     </div>
     <div class="mat-item" onclick="showMateria('tecnologia')">
-      <span class="mat-num">08</span><span class="mat-name"><span class="mat-ico">💻</span> Tecnologia</span><span class="mat-arr">→</span>
+      <span class="mat-num">09</span><span class="mat-name"><span class="mat-ico">💻</span> Tecnologia</span><span class="mat-arr">→</span>
     </div>
     <div class="mat-item" onclick="showMateria('scienze')">
-      <span class="mat-num">09</span><span class="mat-name"><span class="mat-ico">🔬</span> Scienze</span><span class="mat-arr">→</span>
+      <span class="mat-num">10</span><span class="mat-name"><span class="mat-ico">🔬</span> Scienze</span><span class="mat-arr">→</span>
     </div>
     <div class="mat-item" onclick="showMateria('motoria')">
-      <span class="mat-num">10</span><span class="mat-name"><span class="mat-ico">⚽</span> Scienze Motorie</span><span class="mat-arr">→</span>
+      <span class="mat-num">11</span><span class="mat-name"><span class="mat-ico">⚽</span> Scienze Motorie</span><span class="mat-arr">→</span>
     </div>
     <div class="mat-item" onclick="showMateria('conclusione')">
       <span class="mat-num">—</span><span class="mat-name"><span class="mat-ico">🌎</span> Educazione Civica 🔚</span><span class="mat-arr">→</span>
@@ -390,13 +393,22 @@ const materie = {
   conclusione:{ nome: "Educazione Civica", argomento: "Jazz e l'articolo 9 della Costituzione italiana", testo: "Per concludere, il jazz dimostra come la musica possa unire persone diverse e superare le differenze sociali. Nato nelle comunità afroamericane degli Stati Uniti, è diventato un patrimonio culturale apprezzato in tutto il mondo. Questo richiama l'articolo 9 della Costituzione italiana, che promuove la cultura come strumento di crescita, inclusione e condivisione tra tutti i cittadini.", img: "img edcivica.jpeg", imgWidth: 735, imgHeight: 420, cap: "Educazione Civica" }
 };
 
+let lastMaterieScroll = 0;
+
 function showPage(id) {
+  const previousPage = document.querySelector('.page.active');
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  window.scrollTo(0, 0);
+
+  if (id === 'materie' && previousPage && previousPage.id === 'materia-detail') {
+    window.scrollTo(0, lastMaterieScroll);
+  } else {
+    window.scrollTo(0, 0);
+  }
 }
 
 function showMateria(key) {
+  lastMaterieScroll = window.scrollY || window.pageYOffset;
   const m = materie[key];
 
   // aggiorna testi
